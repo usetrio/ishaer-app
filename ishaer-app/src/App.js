@@ -3,6 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import { osName } from 'react-device-detect';
 import './App.scss';
 
+import BgImage from './test.jpg';
+
 function App() {
   let renderContent = () => {
     if (osName === 'Windows') {
@@ -29,7 +31,11 @@ function App() {
           iShaer
         </Navbar.Brand>
       </Navbar>
+
       <div className="App">
+        <div className="ImagePreview">
+          <div style={{ backgroundImage: `url(${BgImage})` }} />
+        </div>
         <div className="DropArea">
           <div className="Status">
               { renderContent() }
