@@ -21,14 +21,45 @@
 }
 
 .Status {
-  background: transparent; 
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center; 
-  color: $dark-gray;
+  color: $white;
   font-size: 40px;
   font-weight: bold;
   text-align: center;  
   position: relative;
   transition: all 250ms ease-in-out 0s; 
+  padding: 12px;
+}
+
+.ImageProgress {
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow: hidden;
+}
+.ImageProgress > .ImageProgressImage {
+  opacity: 0.3;
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.ImageProgress > .ImageProgressUploaded {
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip-path: inset(50% 0 0 0);
 }

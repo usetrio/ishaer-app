@@ -33,10 +33,11 @@ function App() {
       </Navbar>
 
       <div className="App">
-        <div className="ImagePreview">
-          <div style={{ backgroundImage: `url(${BgImage})` }} />
-        </div>
         <div className="DropArea">
+          <div className="ImageProgress">
+              <div className="ImageProgressImage" style={{ backgroundImage: `url(${BgImage})` }}></div>
+              <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${BgImage})` }}></div>
+          </div> 
           <div className="Status">
               { renderContent() }
           </div>
