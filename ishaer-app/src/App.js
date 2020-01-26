@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { osName } from 'react-device-detect';
+import { appSettings } from './configs/config';
 import './App.scss';
 
 function App() {
@@ -30,7 +31,6 @@ function App() {
 
   /* When the asset enter in the app, we fire this event. */
   const onDragOn = (event) => {
-    console.log(event);
     setStatus('Asset Detected');
     event.preventDefault();
   }
@@ -48,16 +48,34 @@ function App() {
   }
   
   const onDrop = event => {
-    const supportedFilesTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+    const supportedFilesTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const { type } = event.dataTransfer.files[0];
 
     /* Check if the file have a supported file type. */
     if (supportedFilesTypes.indexOf(type) > -1) {
-          // Begin Reading File
           const reader = new FileReader();
-          reader.onload = (e) => setPreview(e.target.result);
+          console.log(reader);
+
+          reader.onload = (e) => {
+            console.log(e);
+            setPreview(e.target.result);
+          }
+
           reader.readAsDataURL(event.dataTransfer.files[0]);
+
+          /* New Form Data object */
+          const formData = new FormData();
+          formData.append('asset', event.dataTransfer.files[0]);
+
+          /* XHR - New XHR Request - Using this for the progress upload event. */
+          const xhr = new XMLHttpRequest();
+
+          /* XHR - Make Request */
+          xhr.open('POST', `${appSettings.apiUrl}/upload`);
+          xhr.send(formData);
+          
     }
+
     event.preventDefault();
   }
 
@@ -78,7 +96,6 @@ function App() {
           </div> 
           <div className="Status">
             { status }
-            {/* { renderContent() } */}
           </div>
         </div>
       </div>
