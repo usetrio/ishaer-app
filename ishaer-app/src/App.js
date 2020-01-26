@@ -3,8 +3,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import { osName } from 'react-device-detect';
 import './App.scss';
 
-// import BgImage from './test.jpg';
-
 function App() {
   /* Function to show the correct instructions regarding the OS of the user. */
   const renderContent = () => {
@@ -26,6 +24,7 @@ function App() {
   }
 
   const [status, setStatus] = useState(renderContent());
+  const [preview, setPreview] = useState(null);
 
   const doNothing = (event) => event.preventDefault();
 
@@ -49,8 +48,17 @@ function App() {
   }
   
   const onDrop = event => {
-      console.log(event);
-      event.preventDefault();
+    const supportedFilesTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+    const { type } = event.dataTransfer.files[0];
+
+    /* Check if the file have a supported file type. */
+    if (supportedFilesTypes.indexOf(type) > -1) {
+          // Begin Reading File
+          const reader = new FileReader();
+          reader.onload = (e) => setPreview(e.target.result);
+          reader.readAsDataURL(event.dataTransfer.files[0]);
+    }
+    event.preventDefault();
   }
 
   return (
@@ -64,10 +72,10 @@ function App() {
 
       <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff} onDragOver={doNothing} onDrop={onDragOff}>
         <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragOn}>
-          {/* <div className="ImageProgress">
-              <div className="ImageProgressImage" style={{ backgroundImage: `url(${BgImage})` }}></div>
-              <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${BgImage})` }}></div>
-          </div>  */}
+          <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
+              <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
+              <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${preview})` }}></div>
+          </div> 
           <div className="Status">
             { status }
             {/* { renderContent() } */}
