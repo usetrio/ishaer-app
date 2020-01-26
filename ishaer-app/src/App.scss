@@ -1,7 +1,35 @@
+@import 'scss/base/colors';
+
 .App {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
   height: 100vh;
+}
+
+.DropArea {
+  background: $light-gray; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  width: calc(80vw - 80px);
+  height: calc(80vh - 80px);
+  border: solid 40px transparent;
+  transition: all 250ms ease-in-out 0s;
+  position: relative; 
+}
+
+.Status {
+  background: transparent; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  font-family: 'Helvetica', Arial, sans-serif;
+  color: $dark-gray;
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;  
+  position: relative;
+  transition: all 250ms ease-in-out 0s; 
 }
