@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, InputGroup, FormControl, Button} from 'react-bootstrap';
 import { osName } from 'react-device-detect';
 import { appSettings } from './configs/config';
 import './App.scss';
@@ -54,40 +54,48 @@ function App() {
 
     /* Check if the file have a supported file type. */
     if (supportedFilesTypes.indexOf(type) > -1) {
-          const reader = new FileReader();
+      const reader = new FileReader();
 
-          reader.onload = (e) => {
-            console.log(e);
-            setPreview(e.target.result);
-          }
+      reader.onload = (e) => {
+        setPreview(e.target.result);
+      }
 
-          reader.readAsDataURL(event.dataTransfer.files[0]);
+      reader.readAsDataURL(event.dataTransfer.files[0]);
 
-          /* New Form Data object */
-          const formData = new FormData();
-          formData.append('asset', event.dataTransfer.files[0]);
+      /* New Form Data object */
+      const formData = new FormData();
+      formData.append('asset', event.dataTransfer.files[0]);
 
-          /* XHR - New XHR Request - Using this for the progress upload event. */
-          const xhr = new XMLHttpRequest();
+      /* XHR - New XHR Request - Using this for the progress upload event. */
+      const xhr = new XMLHttpRequest();
+      
+      /* Addint response type */
+      xhr.responseType = 'json';
 
-          /* Checking the upload progress */
-          xhr.upload.onprogress = (e) => {
-            const done = e.position || e.loaded
-            const total = e.totalSize || e.total;
-            const perc = (Math.floor(done / total*1000) / 10);
+      /* Checking the upload progress */
+      xhr.upload.onprogress = (e) => {
+        const done = e.position || e.loaded
+        const total = e.totalSize || e.total;
+        const perc = (Math.floor(done / total*1000) / 10);
 
-            if (perc >= 100) {
-                setStatus('Done');
-            } else {
-                setStatus(`${perc}%`);
-            }
-            setPercentage(perc); 
-          };
+        if (perc >= 100) {
+            setStatus('Done');
+        } else {
+            setStatus(`${perc}%`);
+        }
+        setPercentage(perc); 
+      };
 
-          /* XHR - Make Request */
-          xhr.open('POST', `${appSettings.apiUrl}/upload`);
-          xhr.send(formData);
-          console.log(xhr);
+      /* XHR - Make Request */
+      xhr.open('POST', `${appSettings.apiUrl}/upload`);
+      xhr.send(formData);
+      
+      if (xhr.DONE) {
+        xhr.onload = () => {
+          let jsonResponse = xhr.response;
+          console.log(jsonResponse);
+        };
+      }
     }
 
     event.preventDefault();
@@ -107,8 +115,18 @@ function App() {
           <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
               <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
               <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${preview})`, clipPath: `inset(${100 - Number(percentage)}% 0 0 0);` }}></div>
-          </div> 
-          <div className="Status">
+          </div>
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Append>
+              <Button variant="outline-secondary">Button</Button>
+            </InputGroup.Append>
+          </InputGroup>
+          <div className={`Status ${status === 'Done' ? 'Done' : ''}`}>
             { status }
           </div>
         </div>
