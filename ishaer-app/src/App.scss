@@ -15,7 +15,7 @@
   justify-content: center; 
   width: calc(80vw - 80px);
   height: calc(80vh - 80px);
-  border: solid 40px transparent;
+  border: dashed 3px $dark-gray;
   transition: all 250ms ease-in-out 0s;
   position: relative; 
 }
@@ -25,9 +25,8 @@
   display: flex;
   align-items: center;
   justify-content: center; 
-  font-family: 'Helvetica', Arial, sans-serif;
   color: $dark-gray;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: bold;
   text-align: center;  
   position: relative;
