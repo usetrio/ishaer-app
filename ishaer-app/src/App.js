@@ -27,16 +27,31 @@ function App() {
 
   const [status, setStatus] = useState(renderContent());
 
+  const doNothing = (event) => event.preventDefault();
+
+  /* When the asset enter in the app, we fire this event. */
   const onDragOn = (event) => {
     console.log(event);
     setStatus('Asset Detected');
     event.preventDefault();
   }
 
+  /* When the asset is gone, the main message appears */
   const onDragOff = (event) => {
     setStatus(renderContent());
     event.preventDefault();
-}
+  }
+
+  /* Messa to the user to drop the asset in the Drop Zone */
+  const onDragOver = event => {
+    setStatus('Drop');
+    event.preventDefault();
+  }
+  
+  const onDrop = event => {
+      console.log(event);
+      event.preventDefault();
+  }
 
   return (
     <div>
@@ -47,8 +62,8 @@ function App() {
         </Navbar.Brand>
       </Navbar>
 
-      <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff}>
-        <div className="DropArea">
+      <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff} onDragOver={doNothing} onDrop={onDragOff}>
+        <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragOn}>
           {/* <div className="ImageProgress">
               <div className="ImageProgressImage" style={{ backgroundImage: `url(${BgImage})` }}></div>
               <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${BgImage})` }}></div>
