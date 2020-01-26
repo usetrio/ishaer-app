@@ -26,6 +26,7 @@ function App() {
 
   const [status, setStatus] = useState(renderContent());
   const [preview, setPreview] = useState(null);
+  const [percentage, setPercentage] = useState(0);
 
   const doNothing = (event) => event.preventDefault();
 
@@ -54,7 +55,6 @@ function App() {
     /* Check if the file have a supported file type. */
     if (supportedFilesTypes.indexOf(type) > -1) {
           const reader = new FileReader();
-          console.log(reader);
 
           reader.onload = (e) => {
             console.log(e);
@@ -70,10 +70,24 @@ function App() {
           /* XHR - New XHR Request - Using this for the progress upload event. */
           const xhr = new XMLHttpRequest();
 
+          /* Checking the upload progress */
+          xhr.upload.onprogress = (e) => {
+            const done = e.position || e.loaded
+            const total = e.totalSize || e.total;
+            const perc = (Math.floor(done / total*1000) / 10);
+
+            if (perc >= 100) {
+                setStatus('Done');
+            } else {
+                setStatus(`${perc}%`);
+            }
+            setPercentage(perc); 
+          };
+
           /* XHR - Make Request */
           xhr.open('POST', `${appSettings.apiUrl}/upload`);
           xhr.send(formData);
-          
+          console.log(xhr);
     }
 
     event.preventDefault();
@@ -92,7 +106,7 @@ function App() {
         <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragOn}>
           <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
               <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
-              <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${preview})` }}></div>
+              <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${preview})`, clipPath: `inset(${100 - Number(percentage)}% 0 0 0);` }}></div>
           </div> 
           <div className="Status">
             { status }
