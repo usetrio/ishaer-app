@@ -25,8 +25,6 @@
 }
 
 .Status {
-  // background: rgba(0, 0, 0, 0.3);
-  // color: $white;
   background: transparent;
   color: $dark-gray;
   display: flex;
@@ -38,6 +36,11 @@
   position: relative;
   transition: all 250ms ease-in-out 0s; 
   padding: 12px;
+}
+
+.Status.Done {
+  background: rgba(0, 0, 0, 0.3);
+  color: $white;
 }
 
 .ImageProgress {
