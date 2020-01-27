@@ -24,7 +24,7 @@
   border: solid 40px rgba(0, 0, 0, 0.2);
 }
 
-.Status {
+.Status, .Greeting {
   background: transparent;
   color: $dark-gray;
   display: flex;
@@ -41,6 +41,19 @@
 .Status.Done {
   background: rgba(0, 0, 0, 0.3);
   color: $white;
+}
+
+.Greeting {
+  display: none;
+  font-size: 30px;
+}
+
+.Greeting.Done {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  color: $white;
+  position: absolute;
+  bottom: 10%;
 }
 
 .ImageProgress {

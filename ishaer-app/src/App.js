@@ -3,6 +3,7 @@ import { Navbar, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { osName } from 'react-device-detect';
 import { appSettings } from './configs/config';
 import copy from 'clipboard-copy';
+import DataTransfer from 'fbjs/lib/DataTransfer';
 import './App.scss';
 
 function App() {
@@ -45,14 +46,34 @@ function App() {
   }
 
   /* Messa to the user to drop the asset in the Drop Zone */
-  const onDragOver = event => {
+  const onDragOver = (event) => {
     setStatus('Drop');
     event.preventDefault();
   }
+
+  // const onPaste = (event) => {
+  //   let data = new DataTransfer(event);
+  //   let files = data.getFiles();
+
+  //   console.log(files);
+  // }
   
-  const onDrop = event => {
+  /* Main function to process the asset dropped on the zone */
+  const onDrop = (event) => {
+    console.log(event);
+    let data;
     const supportedFilesTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const { type } = event.dataTransfer.files[0];
+
+    if(event.clipboardData) {
+      data = new DataTransfer(event.clipboardData);
+    }
+    else {
+      data = new DataTransfer(event.dataTransfer);
+    }
+    
+    const asset = data.getFiles();
+    console.log(asset);
+    const { type } = asset[0];
 
     /* Check if the file have a supported file type. */
     if (supportedFilesTypes.indexOf(type) > -1) {
@@ -61,12 +82,11 @@ function App() {
       reader.onload = (e) => {
         setPreview(e.target.result);
       }
-
-      reader.readAsDataURL(event.dataTransfer.files[0]);
+      reader.readAsDataURL(asset[0]);
 
       /* New Form Data object */
       const formData = new FormData();
-      formData.append('asset', event.dataTransfer.files[0]);
+      formData.append('asset', asset[0]);
 
       /* XHR - New XHR Request - Using this for the progress upload event. */
       const xhr = new XMLHttpRequest();
@@ -96,7 +116,6 @@ function App() {
         xhr.onload = () => {
           let jsonResponse = xhr.response;
           setUrl(jsonResponse.asset.public_link);
-          console.log(jsonResponse);
         };
       }
     }
@@ -113,7 +132,7 @@ function App() {
         </Navbar.Brand>
       </Navbar>
 
-      <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff} onDragOver={doNothing} onDrop={onDragOff}>
+      <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff} onDragOver={doNothing} onDrop={onDragOff} onPaste={onDrop}>
         <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragOn}>
           <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
               <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
@@ -130,6 +149,9 @@ function App() {
           </InputGroup>
           <div className={`Status ${status === 'Done' ? 'Done' : ''}`}>
             { status }
+          </div>
+          <div className={`Greeting ${status === 'Done' ? 'Done' : ''}`}>
+              Thank you for use iShaer! wait for your shareable link.
           </div>
         </div>
       </div>
