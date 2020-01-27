@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Navbar, InputGroup, FormControl, Button} from 'react-bootstrap';
+import { Navbar, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { osName } from 'react-device-detect';
 import { appSettings } from './configs/config';
+import copy from 'clipboard-copy';
 import './App.scss';
 
 function App() {
@@ -124,7 +125,7 @@ function App() {
               value={ url }
             />
             <InputGroup.Append>
-              <Button variant="light">Copy</Button>
+              <Button variant="light" onClick={ () => { copy( url ); }}> Copy </Button>
             </InputGroup.Append>
           </InputGroup>
           <div className={`Status ${status === 'Done' ? 'Done' : ''}`}>
