@@ -81,3 +81,17 @@
 .ImageProgress.Show {
   opacity: 1;
 }
+
+.PublicUrl.input-group {
+  visibility: hidden;
+  position: absolute;
+  top: 15%;
+  width: 50%;
+}
+
+.PublicUrl.Visible {
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 5px;
+}

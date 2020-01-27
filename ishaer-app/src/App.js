@@ -27,6 +27,7 @@ function App() {
   const [status, setStatus] = useState(renderContent());
   const [preview, setPreview] = useState(null);
   const [percentage, setPercentage] = useState(0);
+  const [url, setUrl] = useState('');
 
   const doNothing = (event) => event.preventDefault();
 
@@ -93,6 +94,7 @@ function App() {
       if (xhr.DONE) {
         xhr.onload = () => {
           let jsonResponse = xhr.response;
+          setUrl(jsonResponse.asset.public_link);
           console.log(jsonResponse);
         };
       }
@@ -116,14 +118,13 @@ function App() {
               <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
               <div className="ImageProgressUploaded" style={{ backgroundImage: `url(${preview})`, clipPath: `inset(${100 - Number(percentage)}% 0 0 0);` }}></div>
           </div>
-          <InputGroup className="mb-3">
+          <InputGroup className={`mb-3 PublicUrl ${url !== '' ? 'Visible' : ''}`}>
             <FormControl
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
+              disabled="True"
+              value={ url }
             />
             <InputGroup.Append>
-              <Button variant="outline-secondary">Button</Button>
+              <Button variant="light">Copy</Button>
             </InputGroup.Append>
           </InputGroup>
           <div className={`Status ${status === 'Done' ? 'Done' : ''}`}>
