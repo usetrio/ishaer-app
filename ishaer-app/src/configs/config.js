@@ -1,6 +1,6 @@
 
 const appSettings = {
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'https://ishaer-api.herokuapp.com'
 }
 
 export { appSettings };
