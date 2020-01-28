@@ -1,0 +1,110 @@
+@import 'scss/base/colors';
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.DropArea {
+  background: $light-gray; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  width: calc(80vw - 80px);
+  height: calc(80vh - 80px);
+  border: dashed 3px $dark-gray;
+  transition: all 250ms ease-in-out 0s;
+  position: relative; 
+}
+
+.DropArea.Over {
+  border: solid 40px rgba(0, 0, 0, 0.2);
+}
+
+.Status, .Greeting {
+  background: transparent;
+  color: $dark-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;  
+  position: relative;
+  transition: all 250ms ease-in-out 0s; 
+  padding: 12px;
+}
+
+.Status.Done {
+  background: rgba(0, 0, 0, 0.3);
+  color: $white;
+}
+
+.Greeting {
+  display: none;
+  font-size: 30px;
+}
+
+.Greeting.Done {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  color: $white;
+  position: absolute;
+  bottom: 10%;
+}
+
+.ImageProgress {
+  opacity: 0;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow: hidden;
+  transition: all 500ms ease-in-out 250ms;
+}
+
+.ImageProgress > .ImageProgressImage {
+  opacity: 0.3;
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.ImageProgress > .ImageProgressUploaded {
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip-path: inset(0% 0 0 0);
+  transition: all 250ms ease-in-out 0ms;
+}
+
+.ImageProgress.Show {
+  opacity: 1;
+}
+
+.PublicUrl.input-group {
+  visibility: hidden;
+  position: absolute;
+  top: 15%;
+  width: 50%;
+}
+
+.PublicUrl.Visible {
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 5px;
+}
