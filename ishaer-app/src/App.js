@@ -50,13 +50,6 @@ function App() {
     setStatus('Drop');
     event.preventDefault();
   }
-
-  // const onPaste = (event) => {
-  //   let data = new DataTransfer(event);
-  //   let files = data.getFiles();
-
-  //   console.log(files);
-  // }
   
   /* Main function to process the asset dropped on the zone */
   const onDrop = (event) => {
