@@ -98,7 +98,7 @@
 .PublicUrl.input-group {
   visibility: hidden;
   position: absolute;
-  top: 15%;
+  top: -15%;
   width: 50%;
 }
 
@@ -107,4 +107,10 @@
   background: rgba(0, 0, 0, 0.3);
   padding: 8px;
   border-radius: 5px;
+  input: {
+    margin-right: 5px;
+  }
+  button: {
+    margin-left: 5px;
+  }
 }
