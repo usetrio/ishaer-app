@@ -4,6 +4,7 @@ import { osName } from 'react-device-detect';
 import { appSettings } from './configs/config';
 import copy from 'clipboard-copy';
 import DataTransfer from 'fbjs/lib/DataTransfer';
+import { FiCopy } from "react-icons/fi";
 import './App.scss';
 
 function App() {
@@ -130,7 +131,7 @@ function App() {
               value={ url }
             />
             <InputGroup.Append>
-              <Button variant="light" onClick={ () => { copy( url ); }}> Copy </Button>
+              <Button variant="light" onClick={ () => { copy( url ); }}><FiCopy /> Copy </Button>
             </InputGroup.Append>
           </InputGroup>
           <div className={`Status ${status === 'Done' ? 'Done' : ''}`}>
