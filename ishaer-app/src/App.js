@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { osName } from 'react-device-detect';
 import { appSettings } from './configs/config';
 import copy from 'clipboard-copy';
@@ -118,13 +118,6 @@ function App() {
 
   return (
     <div>
-      {/* Navbar with the iShaer title on the left */}
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand>
-          iShaer
-        </Navbar.Brand>
-      </Navbar>
-
       <div className="App" onDragEnter={onDragOn} onDragLeave={onDragOff} onDragOver={doNothing} onDrop={onDragOff} onPaste={onDrop}>
         <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragOn}>
           <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
