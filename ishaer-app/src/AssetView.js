@@ -21,12 +21,16 @@ const AssetView = () => {
     let data = fetchAsset(code);
     const [preview, setPreview] = useState(null);
     const [url, setUrl] = useState('No asset found in this space!');
-
+    const [attachment, setAttachment] = useState('No asset found in this space!');
 
     data.then(info => {
-        console.log(info);
         setPreview(info.asset.url);
         setUrl(info.asset.public_link);
+
+        let index = preview.indexOf("/upload");
+        let str = `${preview.slice(0, index + 7)}/fl_attachment${preview.slice(index + 7)}`;
+
+        setAttachment(str);
     }).catch(err => {
         console.log(err);
     });
@@ -48,7 +52,9 @@ const AssetView = () => {
                             <Button variant="light" onClick={ () => { copy( url ); }}><FiCopy />Copy </Button>
                         </InputGroup.Append>
                         <InputGroup.Append>
-                            <Button variant="light"><FiDownload /> Download </Button>
+                            <a href={ attachment }>
+                                <Button variant="light"><FiDownload />Download</Button>
+                            </a>
                         </InputGroup.Append>
                     </InputGroup>
                 </div>
